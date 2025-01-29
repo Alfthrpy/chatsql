@@ -24,10 +24,11 @@ def yapping(message,history):
 
 with gr.Blocks() as demo:
     state = gr.State(None)
-    gr.Markdown("# Yapping to SQL")
+    gr.Markdown("Chatsql")
 
     with gr.Tab("Chatbot"):
-        gr.ChatInterface(fn=yapping, type='messages',title="Chatsql")
+        gr.Markdown('you must connect to database before using the chatbot')
+        gr.ChatInterface(fn=yapping, type='messages')
         gr.Markdown('Data and chat history are not being collected, so there\'s no need to worry about misuse of your information.')
 
     with gr.Tab("Database"):
@@ -47,4 +48,4 @@ with gr.Blocks() as demo:
 
         btn.click(fn=connect, inputs=[username, password, host,port, database], outputs=[state, toast, tables_output])
 
-demo.launch(share=True)
+demo.launch()
