@@ -47,4 +47,4 @@ with gr.Blocks() as demo:
 
         btn.click(fn=connect, inputs=[username, password, host,port, database], outputs=[state, toast, tables_output])
 
-demo.launch()
+demo.launch(share=True)
