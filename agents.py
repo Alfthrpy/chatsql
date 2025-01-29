@@ -3,6 +3,17 @@ import os
 from dotenv import load_dotenv
 from smolagents import CodeAgent, HfApiModel, tool
 load_dotenv()
+
+connection = None
+
+def set_connection(conn):
+    """
+    Setter global untuk connection. Connection ini bisa diubah dari file lain.
+    """
+    global connection
+    connection = conn
+
+
 def createConnection(user='root',password='password',host='127.0.0.1',database='sakila'):
     cnx = mysql.connector.connect(user=user, password=password,
                               host=host,
@@ -36,18 +47,6 @@ def createColumnDesc(connection):
 
     return DESC_TABLE
 
-
-cnx = createConnection()
-desc = createColumnDesc(cnx)
-
-DESCRIPTION = """
-Allows you to perform SQL queries on the table and returns results in various formats. Beware that this tool's output is a string representation of the execution output.
-It can use the following tables:
-"""
-DESCRIPTION += desc
-
-
-
 @tool
 def sql_engine(query: str) -> str:
     """
@@ -59,7 +58,7 @@ def sql_engine(query: str) -> str:
     Returns:
         str: Query results in a concise, consistent, and minimal format.
     """
-    cursor = cnx.cursor(dictionary=True)  # Enable dictionary cursor
+    cursor = connection.cursor(dictionary=True)  # Enable dictionary cursor
     cursor.execute(query)
 
     # Get column names
@@ -80,8 +79,6 @@ def sql_engine(query: str) -> str:
     return "\n".join(result)
 
 
-
-sql_engine.description = DESCRIPTION
 token = os.getenv('HUGGINGFACE_TOKEN') 
 
 agent = CodeAgent(
@@ -89,6 +86,24 @@ agent = CodeAgent(
     model=HfApiModel("Qwen/Qwen2.5-Coder-32B-Instruct",token=token),
     additional_authorized_imports=["matplotlib.pyplot"]
 )
+
+
+def Inference(conn,query):
+    connection = conn
+
+    desc = createColumnDesc(connection)
+
+    DESCRIPTION = """
+    Allows you to perform SQL queries on the table and returns results in various formats. Beware that this tool's output is a string representation of the execution output.
+    It can use the following tables:
+    """
+    DESCRIPTION += desc
+
+    sql_engine.description = DESCRIPTION
+
+    result = agent.run(query)
+
+    return str(result)
 
 
 

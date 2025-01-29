@@ -1,10 +1,11 @@
 import gradio as gr
-from agents import agent, createConnection, getAllTable
+from agents import agent, createConnection, getAllTable, Inference, set_connection
 
 def connect(username, password, host, database):
     print("test")
     global conn
     conn = createConnection(username, password, host, database)
+    set_connection(conn)
     if conn:
         tables = getAllTable(conn)  # Mengambil data setelah koneksi berhasil
         return (
@@ -17,7 +18,7 @@ def connect(username, password, host, database):
 def yapping(message,history):
     print(history)
     global conn
-    result = agent.run(message)
+    result = Inference(conn,message)
     return str(result) 
 
 
