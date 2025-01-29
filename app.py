@@ -1,10 +1,10 @@
 import gradio as gr
 from agents import agent, createConnection, getAllTable, Inference, set_connection
 
-def connect(username, password, host, database):
+def connect(username, password, host,port, database):
     print("test")
     global conn
-    conn = createConnection(username, password, host, database)
+    conn = createConnection(username, password, host,port, database)
     set_connection(conn)
     if conn:
         tables = getAllTable(conn)  # Mengambil data setelah koneksi berhasil
@@ -32,11 +32,12 @@ with gr.Blocks() as demo:
 
     with gr.Tab("Database"):
         gr.Markdown("### Database Connection")
-        gr.Markdown("Use only a cloud-hosted MySQL server (local servers are not supported).\n\nYou can use the demo server by entering the values as indicated in the placeholders (if desired).")
-        host = gr.Textbox(placeholder="http://127.0.0.1/", label="Host")
-        username = gr.Textbox(placeholder="Username", label="Username")
-        password = gr.Textbox(placeholder="Password", type="password", label="Password")
-        database = gr.Textbox(placeholder="Database", label="Database")
+        gr.Markdown("Use only a cloud-hosted MySQL server (local servers are not supported).\n\nYou can use the demo server (if desired).")
+        host = gr.Textbox(placeholder="http://127.0.0.1/", label="Host", value='mysql-13c1c04a-alfthr378-61ca.d.aivencloud.com')
+        port = gr.Textbox(placeholder="Port", label="Port", value='16222')
+        username = gr.Textbox(placeholder="Username", label="Username", value='chatsqlrek')
+        password = gr.Textbox(placeholder="Password", type="password", label="Password", value='123456789')
+        database = gr.Textbox(placeholder="Database", label="Database", value='sakila')
 
         toast = gr.Markdown(visible=False)  # Feedback setelah tombol ditekan
         btn = gr.Button("Connect")
@@ -44,6 +45,6 @@ with gr.Blocks() as demo:
         gr.Markdown("### Database Info")
         tables_output = gr.Textbox(visible=False)  # Awalnya disembunyikan
 
-        btn.click(fn=connect, inputs=[username, password, host, database], outputs=[state, toast, tables_output])
+        btn.click(fn=connect, inputs=[username, password, host,port, database], outputs=[state, toast, tables_output])
 
 demo.launch()

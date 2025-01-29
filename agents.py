@@ -14,10 +14,11 @@ def set_connection(conn):
     connection = conn
 
 
-def createConnection(user='root',password='password',host='127.0.0.1',database='sakila'):
+def createConnection(user='root',password='password',host='127.0.0.1',port='3306',database='sakila'):
     cnx = mysql.connector.connect(user=user, password=password,
                               host=host,
-                              database=database)
+                              database=database,
+                              port=port)
     
     return cnx
 
