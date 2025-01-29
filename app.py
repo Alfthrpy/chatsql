@@ -28,8 +28,11 @@ with gr.Blocks() as demo:
 
     with gr.Tab("Chatbot"):
         gr.ChatInterface(fn=yapping, type='messages',title="Chatsql")
+        gr.Markdown('Data and chat history are not being collected, so there\'s no need to worry about misuse of your information.')
 
     with gr.Tab("Database"):
+        gr.Markdown("### Database Connection")
+        gr.Markdown("Use only a cloud-hosted MySQL server (local servers are not supported).\n\nYou can use the demo server by entering the values as indicated in the placeholders (if desired).")
         host = gr.Textbox(placeholder="http://127.0.0.1/", label="Host")
         username = gr.Textbox(placeholder="Username", label="Username")
         password = gr.Textbox(placeholder="Password", type="password", label="Password")
