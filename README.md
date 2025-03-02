@@ -1,7 +1,3 @@
-Berikut adalah contoh README yang dapat digunakan untuk proyek ChatSQL:
-
----
-
 # ChatSQL
 
 ChatSQL adalah aplikasi chatbot yang dapat berinteraksi langsung dengan basis data Anda. Dengan menggunakan antarmuka percakapan, ChatSQL memungkinkan pengguna untuk mengajukan pertanyaan dalam bahasa alami dan mendapatkan jawaban langsung dari basis data tanpa perlu menulis kueri SQL secara manual.
@@ -60,12 +56,4 @@ ChatSQL adalah aplikasi chatbot yang dapat berinteraksi langsung dengan basis da
 
 ## Kontribusi
 
-Kontribusi sangat diterima! Silakan fork repositori ini dan ajukan pull request untuk perbaikan atau fitur baru.
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah lisensi MIT.
-
----
-
-Catatan: Pastikan untuk mengganti bagian konfigurasi dengan detail spesifik sesuai dengan kebutuhan dan lingkungan Anda. 
+Kontribusi sangat diterima! Silakan fork repositori ini dan ajukan pull request untuk perbaikan atau fitur baru.s
